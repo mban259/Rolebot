@@ -12,7 +12,9 @@ namespace Rolebot.Utils
             {
                 sw.WriteLine(writeResult);
             }
+#if (DEBUG)
             Console.WriteLine(writeResult);
+#endif
         }
 
         public static void Log(string s, params object[] objects)

@@ -16,6 +16,9 @@ namespace Rolebot
         private MySqlClient MySqlClient;
         static void Main(string[] args)
         {
+#if (!DEBUG)
+            Console.WriteLine("RolebotStart");
+#endif
             Debug.Log("StartUP");
             var program = new Program();
             program.Awake();
