@@ -208,7 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Utils\EnvManager.cs" />
-    <Compile Include="Events\JoinUserMonitor.cs" />
+    <Compile Include="Events\UserMonitor.cs" />
     <Compile Include="Events\RoleMonitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
