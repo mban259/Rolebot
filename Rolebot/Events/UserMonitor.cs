@@ -9,12 +9,12 @@ namespace Rolebot.Events
     class UserMonitor
     {
         private MySqlClient MySqlClient;
-        public UserMonitor(MySqlClient mySqlClientr)
+        internal UserMonitor(MySqlClient mySqlClientr)
         {
             MySqlClient = mySqlClientr;
         }
 
-        public async Task UserJoined(SocketGuildUser user)
+        internal async Task UserJoined(SocketGuildUser user)
         {
             //サーバー入る
             //役職1個目付与
@@ -37,7 +37,7 @@ namespace Rolebot.Events
             }
         }
 
-        public async Task UserLeft(SocketGuildUser user)
+        internal async Task UserLeft(SocketGuildUser user)
         {
             Debug.Log($"{user.Username}:{user.Nickname}:{user.Id} Left {user.Guild.Name}:{user.Guild.Id}");
             var roleIds = user.Roles.Where(r => !r.IsEveryone).Select(r => r.Id);

@@ -25,7 +25,7 @@ namespace Rolebot
             program.MainAsync().GetAwaiter().GetResult();
         }
 
-        public void Awake()
+        internal void Awake()
         {
             Client = new DiscordSocketClient();
             MySqlClient = new MySqlClient(EnvManager.Server, EnvManager.Database, EnvManager.Table, EnvManager.UserId, EnvManager.Password);
@@ -39,7 +39,7 @@ namespace Rolebot
             await Client.StartAsync();
         }
 
-        public async Task MainAsync()
+        internal async Task MainAsync()
         {
             GetEvent();
             await DiscordStart();

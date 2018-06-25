@@ -11,7 +11,7 @@ namespace Rolebot.MySql
     {
         private readonly string Table;
         private readonly string MySqlConnectionString;
-        public MySqlClient(string server, string database, string table, string userId, string password)
+        internal MySqlClient(string server, string database, string table, string userId, string password)
         {
             MySqlConnectionString = new MySqlConnectionStringBuilder()
             {
@@ -24,7 +24,7 @@ namespace Rolebot.MySql
             Table = table;
         }
 
-        public ulong[] GetRoles(ulong userId, ulong guildId)
+        internal ulong[] GetRoles(ulong userId, ulong guildId)
         {
             DataTable dataTable = new DataTable();
             ulong[] result;
@@ -52,21 +52,22 @@ namespace Rolebot.MySql
 
             return result;
         }
-        public void InsertRole(ulong userId, ulong guildId, ulong roleId) => MySqlCommandNonQuery($"insert into {Table} (user,guild,role) values({userId},{guildId},{roleId})");
-        public void InsertRoles(ulong userId, ulong guildId, IEnumerable<ulong> roleIds)
+        internal void InsertRole(ulong userId, ulong guildId, ulong roleId) => MySqlCommandNonQuery($"insert into {Table} (user,guild,role) values({userId},{guildId},{roleId})");
+        internal void InsertRoles(ulong userId, ulong guildId, IEnumerable<ulong> roleIds)
         {
             string values = string.Join(",", roleIds.Select(ul => $"({userId},{guildId},{ul})"));
             MySqlCommandNonQuery($"insert into {Table} (user,guild,role) values {values}");
         }
-        public void DeleteRole(ulong userId, ulong guildId, ulong roleId) => MySqlCommandNonQuery($"delete from {Table} where user={userId} and guild={guildId} and role={roleId}");
-        public void DeleteAllRoles(ulong userId, ulong guildId) => MySqlCommandNonQuery($"delete from {Table} where user={userId} and guild={guildId}");
-        public void DeleteRoles(ulong userId, ulong guildId, IEnumerable<ulong> roleIds)
+        internal void DeleteRole(ulong userId, ulong guildId, ulong roleId) => MySqlCommandNonQuery($"delete from {Table} where user={userId} and guild={guildId} and role={roleId}");
+        internal void DeleteAllRoles(ulong userId, ulong guildId) => MySqlCommandNonQuery($"delete from {Table} where user={userId} and guild={guildId}");
+        internal void DeleteRoles(ulong userId, ulong guildId, IEnumerable<ulong> roleIds)
         {
             string roles = string.Join(" or ", roleIds.Select(ul => $"role={ul}"));
             MySqlCommandNonQuery($"delete from {Table} where user={userId} and guild={guildId} and ({roles})");
         }
+         
 
-        public void UpdateRoles(ulong userId, ulong guildId, IEnumerable<ulong> after)
+        internal void UpdateRoles(ulong userId, ulong guildId, IEnumerable<ulong> after)
         {
             //UPDATEするわけではない
             var before = GetRoles(userId, guildId);

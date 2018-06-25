@@ -5,19 +5,19 @@ namespace Rolebot.Utils
 {
     static class EnvManager
     {
-        public static string Server { private set; get; }
-        public static string UserId { private set; get; }
-        public static string Password { private set; get; }
-        public static string Database { private set; get; }
-        public static string Table { private set; get; }
-        public static string DiscordToken { private set; get; }
+        internal static string Server { private set; get; }
+        internal static string UserId { private set; get; }
+        internal static string Password { private set; get; }
+        internal static string Database { private set; get; }
+        internal static string Table { private set; get; }
+        internal static string DiscordToken { private set; get; }
 
         static EnvManager()
         {
             GetEnv();
         }
 
-        public static void GetEnv()
+        internal static void GetEnv()
         {
             try
             {

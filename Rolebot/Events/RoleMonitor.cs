@@ -11,11 +11,11 @@ namespace Rolebot.Events
     {
         private MySqlClient MySqlClient;
 
-        public RoleMonitor(MySqlClient mySqlClient)
+        internal RoleMonitor(MySqlClient mySqlClient)
         {
             MySqlClient = mySqlClient;
         }
-        public Task GuildMemberUpdated(SocketGuildUser before, SocketGuildUser after)
+        internal Task GuildMemberUpdated(SocketGuildUser before, SocketGuildUser after)
         {
             if (!before.Roles.SequenceEqual(after.Roles))
             {
