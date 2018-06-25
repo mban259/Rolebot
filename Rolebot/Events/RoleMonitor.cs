@@ -15,8 +15,6 @@ namespace Rolebot.Events
         {
             MySqlClient = mySqlClient;
         }
-
-        private string RoleToString(IRole role) => $"{role.Name}:{role.Id}";
         public Task GuildMemberUpdated(SocketGuildUser before, SocketGuildUser after)
         {
             if (!before.Roles.SequenceEqual(after.Roles))
