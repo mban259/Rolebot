@@ -65,6 +65,16 @@ namespace Rolebot.MySql
             string roles = string.Join(" or ", roleIds.Select(ul => $"role={ul}"));
             MySqlCommandNonQuery($"delete from {Table} where user={userId} and guild={guildId} and ({roles})");
         }
+
+        public void UpdateRoles(ulong userId, ulong guildId, IEnumerable<ulong> after)
+        {
+            //UPDATEするわけではない
+            var before = GetRoles(userId, guildId);
+            var addedRoles = after.Except(before);
+            var removedRoles = before.Except(after);
+            if (addedRoles.Any()) InsertRoles(userId, guildId, addedRoles);
+            if (removedRoles.Any()) DeleteRoles(userId, guildId, removedRoles);
+        }
         private void MySqlCommandNonQuery(string commandText)
         {
             using (var connection = new MySqlConnection(MySqlConnectionString))

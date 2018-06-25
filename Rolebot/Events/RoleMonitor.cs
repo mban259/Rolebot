@@ -27,11 +27,7 @@ namespace Rolebot.Events
                 var beforeRolesString = string.Join(",", beforeRoles.Select(r => $"{r.Name}:{r.Id}"));
                 var afterRoleString = string.Join(",", afterRoles.Select(r => $"{r.Name}:{r.Id}"));
                 Debug.Log($"{after.Username}:{after.Nickname}:{after.Id} RoleChange [{beforeRolesString}] -> [{afterRoleString}]");
-                var dbRoles = MySqlClient.GetRoles(after.Id, after.Guild.Id);
-                var addedRoles = afterRoleIds.Except(dbRoles);
-                var removedRoles = dbRoles.Except(afterRoleIds);
-                if (addedRoles.Any()) MySqlClient.InsertRoles(after.Id, after.Guild.Id, addedRoles);
-                if (removedRoles.Any()) MySqlClient.DeleteRoles(after.Id, after.Guild.Id, removedRoles);
+                MySqlClient.UpdateRoles(after.Id, after.Guild.Id, afterRoleIds);
             }
             return Task.CompletedTask;
         }

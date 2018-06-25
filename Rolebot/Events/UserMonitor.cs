@@ -6,10 +6,10 @@ using Rolebot.Utils;
 
 namespace Rolebot.Events
 {
-    class JoinUserMonitor
+    class UserMonitor
     {
         private MySqlClient MySqlClient;
-        public JoinUserMonitor(MySqlClient mySqlClientr)
+        public UserMonitor(MySqlClient mySqlClientr)
         {
             MySqlClient = mySqlClientr;
         }
@@ -35,6 +35,13 @@ namespace Rolebot.Events
                 var rolesString = string.Join(",", roles.Select(r => $"{r.Name}:{r.Id}"));
                 Debug.Log($"{user.Username}:{user.Nickname}:{user.Id} SetRole [{rolesString}]");
             }
+        }
+
+        public async Task UserLeft(SocketGuildUser user)
+        {
+            Debug.Log($"{user.Username}:{user.Nickname}:{user.Id} Left {user.Guild.Name}:{user.Guild.Id}");
+            var roleIds = user.Roles.Where(r => !r.IsEveryone).Select(r => r.Id);
+            MySqlClient.UpdateRoles(user.Id, user.Guild.Id, roleIds);
         }
     }
 

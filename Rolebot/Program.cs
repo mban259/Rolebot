@@ -12,7 +12,7 @@ namespace Rolebot
     {
         private DiscordSocketClient Client;
         private RoleMonitor RoleMonitor;
-        private JoinUserMonitor JoinUserMonitor;
+        private UserMonitor UserMonitor;
         private MySqlClient MySqlClient;
         static void Main(string[] args)
         {
@@ -30,7 +30,7 @@ namespace Rolebot
             Client = new DiscordSocketClient();
             MySqlClient = new MySqlClient(EnvManager.Server, EnvManager.Database, EnvManager.Table, EnvManager.UserId, EnvManager.Password);
             RoleMonitor = new RoleMonitor(MySqlClient);
-            JoinUserMonitor = new JoinUserMonitor(MySqlClient);
+            UserMonitor = new UserMonitor(MySqlClient);
         }
 
         private async Task DiscordStart()
@@ -52,7 +52,8 @@ namespace Rolebot
             Client.Log += Log;
             Client.Ready += Client_Ready;
             Client.GuildMemberUpdated += RoleMonitor.GuildMemberUpdated;
-            Client.UserJoined += JoinUserMonitor.UserJoined;
+            Client.UserJoined += UserMonitor.UserJoined;
+            Client.UserLeft += UserMonitor.UserLeft;
         }
 
         private void Console_CancelKeyPress(object sender, ConsoleCancelEventArgs e)
