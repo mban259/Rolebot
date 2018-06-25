@@ -39,7 +39,7 @@ namespace Rolebot.MySql
                         Debug.Log($"SendCommand {command.CommandText}");
                         var adapter = new MySqlDataAdapter(command);
                         adapter.Fill(dataTable);
-                        result = dataTable.AsEnumerable().Select(x => (ulong)x["role"]).ToArray();
+                        result = (from DataRow row in dataTable.Rows select (ulong)row["role"]).ToArray();
                         Debug.Log($"Success Result:[{string.Join(",", result)}]");
                     }
                     catch (Exception e)
